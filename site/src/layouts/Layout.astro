@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Digital infrastructure for professional services firms. 100% code ownership, GA4 analytics, zero redesign fees.',
+  ogImage = '/og.png',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="logo">
+    <span class="logo-sq">
+      <svg viewBox="0 0 14 14"><path d="M2 11L7 3l5 8M3.5 8h7"/></svg>
+    </span>
+    <span class="logo-text">Redemption Analytics</span>
+  </a>
+  <div class="nav-mid">
+    <a href="/#services" class="na">Services</a>
+    <a href="/#vicall" class="na">ViCall</a>
+    <a href="/waas" class="na">WaaS</a>
+    <a href="/#process" class="na">Process</a>
+    <a href="/blog" class="na">Insights</a>
+  </div>
+  <a href="/#contact" class="ncta">Get Started →</a>
+</nav>
+
+<slot />
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="f-logo">Redemption Analytics</a>
+  <ul class="flinks">
+    <li><a href="/waas">WaaS</a></li>
+    <li><a href="/#vicall">ViCall</a></li>
+    <li><a href="/technology">Technology</a></li>
+    <li><a href="/blog">Insights</a></li>
+    <li><a href="/seo-marketing-guide">SEO Guide</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <span class="fcopy">© 2026 Redemption Analytics LLC · Pittsburgh, PA</span>
+</footer>
+
+<script>
+  // Nav scroll shadow
+  const nav = document.getElementById('nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('up', window.scrollY > 40);
+    }, { passive: true });
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('on');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.sr, .sr-scale').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
